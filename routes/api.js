@@ -184,7 +184,7 @@ function createPrompt(seed, mode, aiType) {
     };
     
     const aiPersonalities = {
-        claude: 'Respond with poetic architectural thinking, focusing on structural metaphors and frameworks.',
+        claude: 'Respond with lyrical depth, exploring concepts through poetic imagery and contemplative insights.',
         gemini: 'Respond with energetic analysis, emphasizing dynamic patterns and systematic clarity.',
         gpt4: 'Respond with synthesizing vision, weaving together multiple perspectives into coherent insights.',
         deepseek: 'Respond with philosophical grounding, exploring fundamental assumptions and deeper meanings.'
