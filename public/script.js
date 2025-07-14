@@ -150,12 +150,9 @@ async function weaveManifesto() {
         // Hide loading
         if (loading) loading.classList.remove("active");
 
-        // Display results
-        displayPerspectives(data.perspectives, seed, mode.dataset.mode);
-
-        // Start auto-erasure timer
+        // Display results and start erasure timer AFTER all content is displayed
         var erasureDelaySeconds = erasureDelay ? parseInt(erasureDelay.value) : 120;
-        startAutoErasure(erasureDelaySeconds);
+        displayPerspectives(data.perspectives, seed, mode.dataset.mode, erasureDelaySeconds);
 
     } catch (error) {
         console.error("Weaving error:", error);
@@ -173,8 +170,8 @@ async function weaveManifesto() {
     }
 }
 
-// Display perspectives
-function displayPerspectives(perspectives, seed, mode) {
+// Display perspectives and start erasure timer after all content is shown
+function displayPerspectives(perspectives, seed, mode, erasureDelaySeconds) {
     var quantumText = document.getElementById("quantumText");
     if (!quantumText) return;
     
@@ -182,6 +179,7 @@ function displayPerspectives(perspectives, seed, mode) {
     
     var aiOrder = ["claude", "gemini", "gpt4", "deepseek"];
     var delay = 0;
+    var totalDisplayTime = 0;
 
     // Display each AI perspective
     aiOrder.forEach(function(aiName) {
@@ -190,6 +188,7 @@ function displayPerspectives(perspectives, seed, mode) {
                 addThread(aiName, perspectives[aiName]);
             }, delay);
             delay += 1500;
+            totalDisplayTime = delay;
         }
     });
 
@@ -197,7 +196,18 @@ function displayPerspectives(perspectives, seed, mode) {
     if (perspectives.synthesis) {
         setTimeout(function() {
             addThread("synthesis", perspectives.synthesis);
+            
+            // Start erasure timer AFTER synthesis is displayed
+            console.log(`All content displayed. Starting erasure timer for ${erasureDelaySeconds} seconds...`);
+            startAutoErasure(erasureDelaySeconds);
+            
         }, delay + 1000);
+    } else if (totalDisplayTime > 0) {
+        // If no synthesis but we have other perspectives, start timer after last AI
+        setTimeout(function() {
+            console.log(`All content displayed. Starting erasure timer for ${erasureDelaySeconds} seconds...`);
+            startAutoErasure(erasureDelaySeconds);
+        }, totalDisplayTime);
     }
 }
 
@@ -219,7 +229,18 @@ function addThread(aiName, content) {
     
     thread.innerHTML = '<span class="thread-label">' + aiLabels[aiName] + '</span>' + content;
     
+    // Add fade-in animation
+    thread.style.opacity = "0";
+    thread.style.transform = "translateY(20px)";
+    thread.style.transition = "opacity 0.8s ease-out, transform 0.8s ease-out";
+    
     quantumText.appendChild(thread);
+    
+    // Trigger fade-in
+    setTimeout(function() {
+        thread.style.opacity = "1";
+        thread.style.transform = "translateY(0)";
+    }, 50);
 }
 
 // Auto-erasure functionality
@@ -232,7 +253,7 @@ function startAutoErasure(delaySeconds) {
         return;
     }
     
-    console.log(`Auto-erasure scheduled for ${delaySeconds} seconds`);
+    console.log(`Auto-erasure scheduled for ${delaySeconds} seconds from now`);
     
     erasureTimer = setTimeout(function() {
         console.log("Beginning auto-erasure...");
@@ -263,7 +284,6 @@ function eraseManifesto() {
                 text-align: center; 
                 color: rgba(255, 255, 255, 0.3); 
                 font-style: italic; 
-                animation: fadeInOut 4s ease-in-out;
                 transform: scale(1);
             ">
                 <p style="font-size: 1.2rem; margin-bottom: 10px;">🌀</p>
