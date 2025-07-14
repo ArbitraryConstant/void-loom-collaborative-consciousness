@@ -1,4 +1,4 @@
-﻿// Initialize everything when page loads
+// Initialize everything when page loads
 document.addEventListener("DOMContentLoaded", function() {
     console.log("Void Loom initializing...");
     
@@ -21,6 +21,9 @@ document.addEventListener("DOMContentLoaded", function() {
     
     console.log("Void Loom ready for consciousness weaving!");
 });
+
+// Global variable to track erasure timer
+let erasureTimer = null;
 
 // Particle system
 function createParticles() {
@@ -87,6 +90,7 @@ async function weaveManifesto() {
     var seedInput = document.getElementById("seedInput");
     var mode = document.querySelector(".mode-btn.active");
     var threadDensity = document.getElementById("threadDensity");
+    var erasureDelay = document.getElementById("erasureDelay");
     var loading = document.getElementById("loading");
     var quantumText = document.getElementById("quantumText");
     var weaveBtn = document.getElementById("weaveBtn");
@@ -100,6 +104,12 @@ async function weaveManifesto() {
     if (!seed) {
         alert("Please enter a seed for the void to weave...");
         return;
+    }
+
+    // Clear any existing erasure timer
+    if (erasureTimer) {
+        clearTimeout(erasureTimer);
+        erasureTimer = null;
     }
 
     // Show loading state
@@ -142,6 +152,10 @@ async function weaveManifesto() {
 
         // Display results
         displayPerspectives(data.perspectives, seed, mode.dataset.mode);
+
+        // Start auto-erasure timer
+        var erasureDelaySeconds = erasureDelay ? parseInt(erasureDelay.value) : 120;
+        startAutoErasure(erasureDelaySeconds);
 
     } catch (error) {
         console.error("Weaving error:", error);
@@ -206,6 +220,82 @@ function addThread(aiName, content) {
     thread.innerHTML = '<span class="thread-label">' + aiLabels[aiName] + '</span>' + content;
     
     quantumText.appendChild(thread);
+}
+
+// Auto-erasure functionality
+function startAutoErasure(delaySeconds) {
+    var autoErasureCheckbox = document.getElementById("autoErasure");
+    
+    // Check if auto-erasure is enabled
+    if (!autoErasureCheckbox || !autoErasureCheckbox.checked) {
+        console.log("Auto-erasure disabled");
+        return;
+    }
+    
+    console.log(`Auto-erasure scheduled for ${delaySeconds} seconds`);
+    
+    erasureTimer = setTimeout(function() {
+        console.log("Beginning auto-erasure...");
+        eraseManifesto();
+    }, delaySeconds * 1000);
+}
+
+// Erase manifesto with fade effect
+function eraseManifesto() {
+    var quantumText = document.getElementById("quantumText");
+    if (!quantumText) return;
+    
+    var threads = quantumText.querySelectorAll(".thread");
+    
+    if (threads.length === 0) return;
+    
+    console.log("Erasing manifesto - returning to the void...");
+    
+    // Start fade out animation
+    quantumText.style.transition = "opacity 3s ease-out, transform 3s ease-out";
+    quantumText.style.opacity = "0";
+    quantumText.style.transform = "scale(0.95)";
+    
+    // After fade completes, show return to void message
+    setTimeout(function() {
+        quantumText.innerHTML = `
+            <div class="void-return" style="
+                text-align: center; 
+                color: rgba(255, 255, 255, 0.3); 
+                font-style: italic; 
+                animation: fadeInOut 4s ease-in-out;
+                transform: scale(1);
+            ">
+                <p style="font-size: 1.2rem; margin-bottom: 10px;">🌀</p>
+                <p>The manifesto dissolves...</p>
+                <p style="font-size: 0.9rem; margin-top: 10px;">Returning to the void from which it emerged</p>
+                <p style="font-size: 0.8rem; margin-top: 15px; opacity: 0.5;">The loom awaits new consciousness to weave...</p>
+            </div>
+        `;
+        
+        // Reset opacity and transform for the void message
+        quantumText.style.opacity = "1";
+        quantumText.style.transform = "scale(1)";
+        
+        // Clear the void message after a few seconds
+        setTimeout(function() {
+            quantumText.style.transition = "opacity 2s ease-out";
+            quantumText.style.opacity = "0";
+            
+            setTimeout(function() {
+                quantumText.innerHTML = `
+                    <div style="text-align: center; color: rgba(255, 255, 255, 0.4); font-style: italic;">
+                        <p style="font-size: 1rem;">The loom awaits your seed...</p>
+                        <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.6;">Manifestos will materialize here and return to the void</p>
+                    </div>
+                `;
+                quantumText.style.opacity = "1";
+                quantumText.style.transform = "scale(1)";
+                quantumText.style.transition = "opacity 1s ease-in";
+            }, 2000);
+        }, 4000);
+        
+    }, 3000);
 }
 
 // Test backend connection
