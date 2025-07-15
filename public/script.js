@@ -69,10 +69,14 @@ function initializeSliders() {
 
     if (threadDensity && densityValue) {
         threadDensity.addEventListener("input", function(e) {
-            var value = e.target.value;
-            var perspectives = ["Claude + Synthesis", "Claude + Gemini + Synthesis", 
-                              "Claude + Gemini + GPT-4 + Synthesis", "All 4 AIs + Synthesis"];
-            densityValue.textContent = perspectives[value - 2] || value + " perspectives";
+            var value = parseInt(e.target.value);
+            var perspectives = {
+                2: "Claude + Synthesis",
+                3: "Claude + Gemini + Synthesis", 
+                4: "Claude + Gemini + GPT-4 + Synthesis",
+                5: "All 4 AIs + Synthesis"
+            };
+            densityValue.textContent = perspectives[value] || value + " perspectives";
         });
     }
 
