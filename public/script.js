@@ -245,7 +245,7 @@ function addThread(aiName, content) {
 
 // Auto-erasure functionality
 function startAutoErasure(delaySeconds) {
-    var autoErasureCheckbox = document.getElementById("autoErasure");
+    var autoErasureCheckbox = document.getElementById("autoErase");
     
     // Check if auto-erasure is enabled
     if (!autoErasureCheckbox || !autoErasureCheckbox.checked) {
