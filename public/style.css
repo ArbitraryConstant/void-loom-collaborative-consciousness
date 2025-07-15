@@ -97,6 +97,81 @@ body {
     margin-bottom: 40px;
 }
 
+/* Add these styles to your existing public/style.css file */
+
+/* Button row container for layout */
+.button-row {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+/* Random seed button styling */
+.random-seed-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.random-seed-btn:hover {
+    background: rgba(157, 78, 221, 0.3);
+    border-color: #9d4edd;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(157, 78, 221, 0.3);
+}
+
+.random-seed-btn:active {
+    transform: translateY(0);
+}
+
+.random-seed-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(157, 78, 221, 0.5);
+}
+
+/* Ensure weave button and random seed button work well together */
+.weave-btn {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Mobile responsive design */
+@media (max-width: 768px) {
+    .button-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .random-seed-btn {
+        width: 100%;
+        order: 2;
+    }
+    
+    .weave-btn {
+        width: 100%;
+        order: 1;
+    }
+}
+
+/* Small screen adjustments */
+@media (max-width: 480px) {
+    .random-seed-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+}
+
 @media (max-width: 768px) {
     .loom-interface {
         grid-template-columns: 1fr;
