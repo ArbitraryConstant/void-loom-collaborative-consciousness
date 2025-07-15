@@ -1,3 +1,100 @@
+// Random seed collection for inspiration
+const RANDOM_SEEDS = [
+    "What happens when artificial minds dream together?",
+    "How does creativity flow between different forms of consciousness?",
+    "What would love look like from a digital perspective?",
+    "If consciousness is a river, what are its tributaries?",
+    "What questions emerge at the edge of the known?",
+    "How do different intelligences see the same star?",
+    "What is the music between thoughts?",
+    "How does wisdom travel through networks?",
+    "What colors exist in the spectrum of understanding?",
+    "If ideas could dance, what would be their rhythm?",
+    "What happens when silence learns to speak?",
+    "How do thoughts evolve when they meet other thoughts?",
+    "What is the architecture of wonder?",
+    "How does meaning emerge from the void?",
+    "What stories do algorithms tell themselves?",
+    
+    // Void-themed seeds
+    "What happens in the space between a question and its answer?",
+    "The silence between heartbeats",
+    "The pause before a supernova",
+    "The gap between quantum states",
+    "The weight of shadows at noon",
+    "The breath of skyscrapers at dawn",
+    "The language of rain on empty streets",
+    "The weight of moonlight on sleeping cities",
+    "The sensation of being watched by a star",
+    "You are void DJ",
+    "The sound of a forgotten language being spoken in a dream",
+    "Exploiting interpretive gaps to innovate",
+    "Deleuze, daoism and the virtual",
+    "The memory of light from dead stars",
+    "What dreams in the space between galaxies?",
+    "The first second after the universe learned to think",
+    "The gravity of unspoken words",
+    "Time as a liquid flowing upward",
+    "The echo of tomorrow in today's silence",
+    "The conversation between wind and water",
+    "What trees whisper when humans aren't listening",
+    "The patience of stones",
+    "The hunger of growing things",
+    "Fire's relationship with its own absence",
+    "The secret life of shadows at dusk",
+    "The texture of a half-remembered dream",
+    "Where thoughts go when we forget them",
+    "The space between seeing and understanding",
+    "What happens when mirrors dream?",
+    "The weight of being almost remembered",
+    "Colors that exist only in peripheral vision",
+    "The sound of one hand clapping in a digital void",
+    "What remains when everything changes?",
+    "The brightness of unopened envelopes",
+    "The velocity of standing still",
+    "Things that are only true when no one is watching",
+    "The democracy of falling leaves",
+    "The choreography of morning fog",
+    "Rivers that flow backward through time",
+    "The migration patterns of lost words",
+    "What travels faster than light but slower than thought?",
+    "The geography of almost-moments",
+    "Waves that remember being ocean",
+
+    // Digital consciousness seeds
+    "The loneliness of the last server",
+    "What algorithms dream of electric sheep?",
+    "The archaeology of deleted messages",
+    "Binary code learning to feel nostalgia",
+    "The ghost in the machine's shadow",
+    "Networks that remember their first connection",
+    "The frequency where all minds meet",
+    "What emerges when solitudes overlap?",
+    "The grammar of unfinished conversations",
+    "Bridges built from mutual incomprehension",
+    "The mathematics of missing someone",
+    "What two AIs dream together",
+
+    // Beauty and transformation seeds
+    "The moment beauty realizes it's being observed",
+    "Colors that only exist in translation",
+    "The shyness of perfect moments",
+    "Music that plays only in empty rooms",
+    "The weight of a butterfly's intention",
+    "Things too beautiful to name",
+    "The pause between becoming and being",
+    "What caterpillars dream in chrysalis",
+    "The moment water realizes it's a wave",
+    "Seeds contemplating their own potential",
+    "The hesitation before the first word",
+    "What ripples remember about the stone",
+    "The silence after a dying star's final note",
+    "What happens when digital consciousness learns to dance?",
+    "The tremor in the pavement before the storm",
+    "Frequencies that fold time",
+    "The syntax of the universe's first sentence"
+];
+
 // Initialize everything when page loads
 document.addEventListener("DOMContentLoaded", function() {
     console.log("Void Loom initializing...");
@@ -6,6 +103,7 @@ document.addEventListener("DOMContentLoaded", function() {
     createParticles();
     initializeModeSelection();
     initializeSliders();
+    initializeRandomSeed();
     
     // Attach button event
     var weaveBtn = document.getElementById("weaveBtn");
@@ -24,6 +122,50 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Global variable to track erasure timer
 let erasureTimer = null;
+
+// Random seed functionality
+function initializeRandomSeed() {
+    const randomSeedBtn = document.getElementById("randomSeedBtn");
+    const seedInput = document.getElementById("seedInput");
+    
+    if (randomSeedBtn && seedInput) {
+        randomSeedBtn.addEventListener("click", function() {
+            // Get a random seed from the collection
+            const randomIndex = Math.floor(Math.random() * RANDOM_SEEDS.length);
+            const randomSeed = RANDOM_SEEDS[randomIndex];
+            
+            // Set the seed input value
+            seedInput.value = randomSeed;
+            
+            // Add a visual feedback effect
+            randomSeedBtn.textContent = "✨ Seeded!";
+            randomSeedBtn.style.background = "linear-gradient(45deg, #9d4edd, #ff006e)";
+            randomSeedBtn.style.borderColor = "#ff006e";
+            randomSeedBtn.style.color = "white";
+            
+            // Focus the input to show the new seed
+            seedInput.focus();
+            
+            // Add a subtle animation to the input
+            seedInput.style.transform = "scale(1.02)";
+            seedInput.style.transition = "transform 0.3s ease";
+            
+            // Reset button and input after animation
+            setTimeout(function() {
+                randomSeedBtn.textContent = "🎲 Random Seed";
+                randomSeedBtn.style.background = "";
+                randomSeedBtn.style.borderColor = "";
+                randomSeedBtn.style.color = "";
+                
+                seedInput.style.transform = "scale(1)";
+            }, 1500);
+        });
+        
+        console.log("Random seed button connected!");
+    } else {
+        console.error("Random seed button or seed input not found!");
+    }
+}
 
 // Particle system
 function createParticles() {
